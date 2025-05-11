@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sticker Signer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Sticker Signer</h1>
+  <div id="controls">
+    <label for="stickerSelect">Choose a sticker:</label>
+    <select id="stickerSelect"></select>
+
+    <label for="modeSelect">Mode:</label>
+    <select id="modeSelect">
+      <option value="draw">Draw</option>
+      <option value="text">Text</option>
+    </select>
+
+    <div id="drawControls">
+      <label for="colorPicker">Color:</label>
+      <input type="color" id="colorPicker" value="#000000" />
+      <label for="brushSize">Size:</label>
+      <input type="range" id="brushSize" min="1" max="10" value="2" />
+    </div>
+
+    <div id="textControls" style="display:none;">
+      <input type="text" id="textInput" placeholder="Enter signature" />
+      <label for="textSize">Size:</label>
+      <input type="range" id="textSize" min="10" max="100" value="24" />
+    </div>
+
+    <button id="clearBtn">Clear Signature</button>
+    <button id="downloadBtn">Download Signed Sticker</button>
+  </div>
+  <canvas id="stickerCanvas" width="512" height="512"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
