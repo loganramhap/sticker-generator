@@ -1,0 +1,31 @@
+name: Update Sticker Manifest
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  update-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Generate manifest.json
+        run: |
+          STICKERS_DIR=stickers
+          MANIFEST_FILE=$STICKERS_DIR/manifest.json
+          echo "[" > $MANIFEST_FILE
+          find $STICKERS_DIR -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" \) \
+            | sed 's|^stickers/||' \
+            | sed 's|.*|  "&",|' >> $MANIFEST_FILE
+          sed -i '$ s/,$//' $MANIFEST_FILE
+          echo "]" >> $MANIFEST_FILE
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add stickers/manifest.json
+          git diff --cached --quiet || git commit -m "Auto-update manifest.json"
+          git push
